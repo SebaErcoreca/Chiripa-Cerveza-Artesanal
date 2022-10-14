@@ -1,0 +1,22 @@
+.logo {
+    height: 50%;
+    width: 50%;
+}
+
+.userIcon {
+    width: 16;
+    height: 16;
+}
+
+.cart {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.Active{
+    color: red
+}
+.Inactive{
+    color: blue;
+}
