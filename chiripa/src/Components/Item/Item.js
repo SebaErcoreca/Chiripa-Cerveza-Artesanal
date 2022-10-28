@@ -1,7 +1,5 @@
 import { Link } from 'react-router-dom';
-import Card from 'react-bootstrap/Card';
-import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
+import {Col, Card, Button} from 'react-bootstrap';
 
 export const Item = ({ item }) => {
 
@@ -17,7 +15,7 @@ export const Item = ({ item }) => {
 
           <div className='text-end p-2'>
             <Card.Title>$ {item.price}</Card.Title>
-            <Link to={`/item/${item.id}`}>
+            <Link to={`/item/${item.category}/${item.id}`}>
               <Button variant='secondary'>Detalle</Button>
             </Link>
           </div>

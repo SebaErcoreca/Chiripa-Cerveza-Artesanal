@@ -5,32 +5,44 @@ import { db } from "../../FirebaseConfigs/firebaseConfig";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import NavbarResponsive from "../Navbar/Navbar";
 import Row from 'react-bootstrap/Row';
+import CategoryWidget from "../CategoryWidget/CategoryWidget";
+import Spinner from "../spinner/spinner";
 
 const ItemListContainer = () => {
-    const { categoryId } = useParams();
-    console.log('categoryId', categoryId)
+
     const [productos, setProductos] = useState([]);
+
+    const { categoryId } = useParams();
+
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const queryRef = !categoryId ?
             collection(db, "items") :
-            query(collection(db, "items"), where("categoria", "==", categoryId));
-        getDocs(queryRef).then(response => {
-            const resultados = response.docs.map(doc => {
-                const newItem = {
+            query(collection(db, "items"), where("category", "==", categoryId));
+        getDocs(queryRef).then(result => {
+            const resultados = result.docs.map(doc => {
+                return {
                     id: doc.id,
                     ...doc.data(),
                 }
-                return newItem
             });
-            console.log(resultados)
             setProductos(resultados);
+            setLoading(false);
         })
     }, [categoryId]);
 
+    if (loading === true) {
+        return <Spinner />;
+    }
+
     return (
         <>
-            <NavbarResponsive />
+            <div>
+                <NavbarResponsive />
+                <CategoryWidget />
+            </div>
+
             <Row xs={1} md={2} lg={3} className="g-4">
                 <ItemList items={productos} />
             </Row>
